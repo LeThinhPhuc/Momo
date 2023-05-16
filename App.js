@@ -11,7 +11,7 @@ import * as React from 'react';
 
 
 const Tab = createBottomTabNavigator();
-
+import MyWallet from './components/MyWallet/MyWallet';
 export default function App() {
 
   return (
@@ -74,6 +74,12 @@ const styles = StyleSheet.create({
   },
   bottomTab : {
     padding: 20,
+      flex: 1,
+      // paddingTop:25,
+      backgroundColor: '#fff',
+      color:"green",
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });
 

@@ -38,10 +38,10 @@ const MyWallet = () => {
   };
     return (
         <View style={{ height: "100%", position: "relative" }}>
-            <View style={{ alignItems: "center", justifyContent: "center", backgroundColor: "#D82D8B", marginBottom: 20 }}>
+            {/* <View style={{ alignItems: "center", justifyContent: "center", backgroundColor: "#D82D8B", marginBottom: 20 }}>
                 <Text style={{ height: 70, fontWeight: "bold", fontSize: 18, color: "white", paddingTop: 35 }}>Ví của tôi</Text>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center", height: 90, padding: 20, backgroundColor: "#e8ebeb", marginLeft: 30, marginRight: 30, marginBottom: 35, borderRadius: 10 }}>
+            </View> */}
+            <View style={{ flexDirection: "row", alignItems: "center", height: 90, padding: 20, backgroundColor: "#e8ebeb", marginLeft: 30, marginRight: 30, marginBottom: 35, borderRadius: 10, marginTop:20 }}>
                 <View style={{
                     width: 60,
                     height: 60,

@@ -6,6 +6,7 @@ import {MOMO} from './components/MOMO';
 import {CHAT} from './components/CHAT';
 import {LSGD} from './components/LSGD';
 import {VCT} from './components/VCT';
+import MyWallet from './components/MyWallet/MyWallet';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as React from 'react';
 
@@ -56,7 +57,7 @@ export default function App() {
           <Tab.Screen name="MOMO" component={MOMO} options={{tabBarLabel: "MOMO"}}/>
           <Tab.Screen name="LSGD" component={LSGD} options={{tabBarLabel: "LỊCH SỬ GD"}}/>
           <Tab.Screen name="CHAT" component={CHAT} options={{tabBarLabel: "CHAT"}}/>
-          <Tab.Screen name="VCT" component={VCT} options={{tabBarLabel: "VÍ CỦA TÔI"}}/>
+          <Tab.Screen name="VCT" component={MyWallet} options={{tabBarLabel: "VÍ CỦA TÔI"}}/>
       </Tab.Navigator>
     </NavigationContainer>
     </View>
@@ -76,6 +77,3 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
-
-
-

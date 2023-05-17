@@ -9,8 +9,8 @@ const MyWallet = () => {
         {id:2, key: 'AgriBank', photo: "https://atc-edge14.mservice.com.vn/momo_app_v2/img/VARB.png" },
         {id:3, key:'Sacombank', photo: "https://atc-edge18.mservice.com.vn/momo_app_v2/img/STB.png"},
         {id:4, key: 'TPBank', photo: "https://atc-edge23.mservice.com.vn/momo_app_v2/img/TPB.png" },
-        {id:5, key:'Techcombank', photo: "https://atc-edge19.mservice.com.vn/momo_app_v2/img/CTG.png"},
-        {id:6, key:'Vietinbank', photo: "https://atc-edge02.mservice.com.vn/momo_app_v2/img/TCB.png"},
+        {id:5, key:'Vietinbank', photo: "https://atc-edge19.mservice.com.vn/momo_app_v2/img/CTG.png"},
+        {id:6, key:'Techcombank', photo: "https://atc-edge02.mservice.com.vn/momo_app_v2/img/TCB.png"},
         {id:7, key:'SCB', photo: "https://atc-edge29.mservice.com.vn/momo_app_v2/img/SCB.png"},
         {id:8, key:'HDBank', photo: "https://atc-edge34.mservice.com.vn/momo_app_v2/img/HDB.png"},
         {id:9, key: 'ACB', photo: "https://atc-edge22.mservice.com.vn/momo_app_v2/img/ACB.png" },
@@ -63,11 +63,11 @@ const MyWallet = () => {
             </View>
             <View style={{ justifyContent: "center", alignItems: 'center', position: "relative" , marginBottom:20}}>
                 <TextInput style={styles.input} />
-                <Text style={{ position: "absolute", top: 1, left: "18%", backgroundColor: "white" }}>Họ và tên</Text>
+                <Text style={{fontSize:15, position: "absolute", top: 1, left: "18%", backgroundColor: "white", fontWeight:"bold" }}>Họ và tên</Text>
             </View>
             <View style={{ justifyContent: "center", alignItems: 'center', position: "relative" }}>
                 <TextInput style={styles.input} />
-                <Text style={{ position: "absolute", top: 1, left: "18%", backgroundColor: "white" }}>Số tài khoản</Text>
+                <Text style={{fontSize:15, position: "absolute", top: 1, left: "18%", backgroundColor: "white", fontWeight:"bold" }}>Số tài khoản</Text>
             </View>
             <View style={{ bottom: 35, width: "100%", position: "absolute", flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: 20 }}>
                 <View style={{ width: "35%" }}>
@@ -81,12 +81,12 @@ const MyWallet = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom:10,marginTop:25, marginLeft:50 }}>Ngân Hàng</Text>
+            <Text style={{color:"#D82D8B", fontSize: 18, fontWeight: "bold", marginBottom:10,marginTop:25, marginLeft:50 }}>Ngân Hàng</Text>
             <View   style={{alignItems:"center", justifyContent:"center"}}>
             <View   style={{width:"70%", flexDirection: "row", alignItems: "center", height: 70, padding: 20, marginBottom: 20, borderRadius: 10,borderWidth: 2,borderColor: "#FFD6E7"  }}>
                 <Image  source={{ uri: `${pho}` }} style={{ width: 50, height: 50 }} />
                 <View style={{ marginLeft: 10 }}>
-                    <Text onPress={() => setModalVisible(true)}  style={{ fontSize: 18, fontWeight: "bold" }}>{bank}</Text>
+                    <Text onPress={() => setModalVisible(true)}  style={{color:"#D82D8B", fontSize: 18, fontWeight: "bold" }}>{bank}</Text>
                 </View>
             </View>
             </View> 

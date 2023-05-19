@@ -1,4 +1,4 @@
-import { View, Text, Button, TextInput } from 'react-native'
+import { View, Text, Button, TextInput,StyleSheet,Image,TouchableOpacity } from 'react-native'
 import { useState } from 'react'
 import React from 'react'
 import { app, db } from '../config/firebaseconfig'
@@ -29,54 +29,73 @@ export default function Login({ navigation }) {
             });
     }
 
-    const handleTaoTaiKhoan = () => {
-        let tk = TaoTaiKhoan + "@gmail.com";
-        createUserWithEmailAndPassword(auth, tk, TaoMatKhau)
-            .then(async (userCredential) => {
 
-                const user = userCredential.user;
-                try {
-                    const docRef = await setDoc(doc(db,TaoTaiKhoan,'PersonalInformation'),{
-                        FullName : TenNguoiDung,
-                        PhoneNumber : TaoTaiKhoan,
-                        Balance : 0
-                    })
-                    console.log("Thêm dữ liệu vào firebase thành công")
-                } 
-                catch (e) {
-                    console.error("Error adding document: ", e);
-                }
-                console.log("Tạo tài khoản thành công");
-
-            })
-            .catch((error) => {
-                console.log(error.code);
-                console.log(error.message);
-            })
-
-
-
-    }
     return (
-        <View style={{ justifyContent: 'center', flex: 1 }}>
-            <Text >Tài khoản</Text>
-            <TextInput maxLength={11} keyboardType='numeric' style={{ backgroundColor: 'pink' }} onChangeText={text => setTaiKhoan(text)} />
-
-            <Text>Mât khẩu</Text>
-            <TextInput style={{ backgroundColor: 'pink' }} onChangeText={text => setMatKhau(text)} ></TextInput>
-            <Button onPress={handleLogin} title='Đăng nhập'></Button>
-
-
-            <View>
-                <Text>Tao tk</Text>
-                <Text>Tên người dùng</Text>
-                <TextInput style = {{backgroundColor : 'pink'}} onChangeText={text => setTenNguoiDung(text)}></TextInput>
-                <Text>tk</Text>
-                <TextInput maxLength={11} keyboardType='numeric' style={{ backgroundColor: 'pink' }} onChangeText={text => setTaoTaiKhoan(text)}></TextInput>
-                <Text>mk</Text>
-                <TextInput style={{ backgroundColor: 'pink' }} onChangeText={text => setTaoMatKhau(text)}></TextInput>
-                <Button onPress={handleTaoTaiKhoan} title='tao tk'></Button>
+        <View style={styles.container}>
+            <Image style = {styles.logo}
+                source={require('../src/image/logo.png')}>
+            </Image>
+            <View style={styles.text}>
+                <Text></Text>
+                <Text style = {{fontSize : 20,color:'#ffff'}}>Thiết lập mật khẩu để bảo vệ tài khoản</Text>
+                <Text style = {{fontSize : 20,color:'#ffff'}}>     ví MoMo của bạn (gồm 6 chữ số)</Text>
             </View>
+            <TextInput maxLength={11} keyboardType='numeric' style={styles.ip} placeholder='Nhập tài khoản'
+                onChangeText={text => setTaiKhoan(text)} />
+
+            <TextInput style={styles.ip} placeholder='Nhập mật khẩu'
+                onChangeText={text => setMatKhau(text)}/>
+            {/* Nút login */}
+            <TouchableOpacity style = {styles.login} onPress={handleLogin}>
+                        <Text style = {{fontSize : 30}}>Log in</Text>
+            </TouchableOpacity>
+            {/* nút tạo tài khoản  */}
+
+
         </View>
     )
 }
+const styles = StyleSheet.create({
+    container: {
+        //justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#D82D8B',
+        
+    },
+    logo: {
+        width:250,
+        height:250,
+        position:'relative',
+        top : 50,
+        left: 175,
+    },
+    text: {
+        position:'relative',
+        left: 130,
+        
+    },
+    ip: {
+        position:'relative',
+        left: 65,
+        backgroundColor: '#ffff',
+        marginTop : 30,
+        width : 470,
+        height : 70,
+        textAlign : 'center',
+        fontSize : 20,
+        borderRadius:40 
+    },
+    login: {
+        position:'relative',
+        left: 69,
+        marginTop : 30,
+        backgroundColor : 'pink',
+        textAlign : 'center',
+        width : 460,
+        height : 50,
+        alignItems : 'center',
+        textAlign: 'center',
+        justifyContent : 'center',
+        borderRadius:30 
+    }
+})

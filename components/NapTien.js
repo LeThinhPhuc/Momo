@@ -7,7 +7,7 @@ import { db } from '../config/firebaseconfig';
 import { Bank } from '../LinhTinh/Banks';
 export function NapTien({ route, navigation }) {
 
-    const { SoTaiKhoan } = route.params;
+    const { SoTaiKhoan } = route.params; 
 
     //load tiền 
     const [Balance, setBalance] = useState(0);//tiền trong momo
@@ -88,7 +88,7 @@ export function NapTien({ route, navigation }) {
                 <Text style={styles.txt_NapTien}>Nạp tiền vào</Text>
                 <View style={styles.Vi}>
                     <Text style={{ textAlign: 'center' }}>Ví của tôi</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance).toLocaleString('en-US') + 'đ'}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance)?.toLocaleString('en-US') + 'đ'}</Text>
                 </View>
                 <View>
                     <TextInput keyboardType = 'numeric' placeholder='Nhập số tiền' style={styles.Ip_NhapTien} onChangeText={text => setDeposit(text)}></TextInput>

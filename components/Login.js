@@ -15,12 +15,13 @@ export default function Login({ navigation }) {
     const auth = getAuth(app);
 
     const handleLogin = () => {
-        let tk = TaiKhoan + "@gmail.com";
+        let tk = "09090909090" + "@gmail.com";
+        let mk = "123456";
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, tk, MatKhau)
+        signInWithEmailAndPassword(auth, tk, mk)
             .then((userCredential) => {
                 navigation.navigate('Momo', {
-                    SoTaiKhoan: TaiKhoan
+                    SoTaiKhoan: "09090909090"
                 });
             })
             .catch((error) => {

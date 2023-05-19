@@ -26,7 +26,7 @@ export const Bank = (props) =>{
                     </View>
 
                     <View style = {{alignItems : 'flex-end' ,flex : 1,justifyContent : 'center' ,marginRight : 20}}>
-                        <Text>{BankBalance.toLocaleString('en-US')}</Text>
+                        {BankBalance !== undefined && <Text>{BankBalance.toLocaleString('en-US')}</Text>}
                     </View>
                 </View>
             </TouchableOpacity>

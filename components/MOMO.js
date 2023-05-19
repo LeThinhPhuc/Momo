@@ -33,7 +33,16 @@ export const MOMO = ({ navigation,route }) => {
 		}
 		LoadBalanceAndFullName();
 	},[SoTaiKhoan])
-
+	
+	const handleReload = async () =>{
+		const docRef = doc(db,SoTaiKhoan,"PersonalInformation"); //lấy doccumentID là PersonalInformation trong Collection SoTaiKhoan được lưu trong db
+			const docSnap = await getDoc(docRef) 
+			if(docSnap.exists())
+			{
+				setamount(docSnap.data().Balance);
+				setTenKhachHang(docSnap.data().FullName);
+			}
+	}
 	return (
 		<View style={styles.container}>
 
@@ -71,8 +80,16 @@ export const MOMO = ({ navigation,route }) => {
 					<TouchableOpacity onPress={toggleAmountVisibility}>
 						<Ionicons style={styles.eye} name={isAmountVisible ? 'eye' : 'eye-off'} size={40} />
 					</TouchableOpacity>
+
 					<Text style={styles.amount}>{isAmountVisible ? amount.toLocaleString('en-US') + 'đ' : '*********'}</Text>
+					
+					<View >
+						<TouchableOpacity style = {styles.btn_reload} onPress={handleReload}>
+							<Text>Reload</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
+
 			</View> 
 		</View>
 	)
@@ -149,5 +166,15 @@ const styles = StyleSheet.create({
 	},
 	font_feature: {
 		fontSize: 20,
+	},
+
+	btn_reload :{
+		width : 50,
+		height : 50 ,
+		backgroundColor : 'pink',
+		justifyContent :'center',
+		alignItems : 'center',
+		marginLeft : 40,
+		borderRadius : 20
 	}
 });

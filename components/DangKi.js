@@ -1,10 +1,10 @@
 import { View, Text, Button, TextInput } from 'react-native'
-import { useState } from 'react'
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 import { app, db } from '../config/firebaseconfig'
 import { collection, addDoc,setDoc, doc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth'
-export default function Login({ navigation }) {
+import Constants from 'expo-constants';
+export const DangKi = ({navigation}) =>{
 
     const [TenNguoiDung,setTenNguoiDung] = useState();
     const [TaiKhoan, setTaiKhoan] = useState();

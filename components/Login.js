@@ -1,4 +1,4 @@
-import { View, Text, Button, TextInput,StyleSheet,Image,TouchableOpacity } from 'react-native'
+import { View, Text, Button, TextInput,StyleSheet,Image,TouchableOpacity, Platform } from 'react-native'
 import { useState } from 'react'
 import React from 'react'
 import { app, db } from '../config/firebaseconfig'
@@ -29,7 +29,9 @@ export default function Login({ navigation }) {
             });
     }
 
-
+    const handleDangki=()=>{
+		navigation.navigate('Signin');
+	}
     return (
         <View style={styles.container}>
             <Image style = {styles.logo}
@@ -50,7 +52,9 @@ export default function Login({ navigation }) {
                         <Text style = {{fontSize : 30}}>Log in</Text>
             </TouchableOpacity>
             {/* nút tạo tài khoản  */}
-
+            <TouchableOpacity style = {styles.CreateAccount} onPress={handleDangki}>
+                    <Text style = {{textDecorationLine : 'underline', fontSize : 20, color: '#ffff'}}>Đăng kí</Text>
+            </TouchableOpacity>
 
         </View>
     )
@@ -60,42 +64,56 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         flex: 1,
         backgroundColor: '#D82D8B',
+        alignItems: 'center',
+        //flexDirection: Platform.OS === 'android' || Platform.OS === 'ios' ? 'row' : 'column',
         
     },
     logo: {
         width:250,
         height:250,
         position:'relative',
-        top : 50,
-        left: 175,
+        top : '5%',
+        //left: 175,
     },
     text: {
         position:'relative',
-        left: 130,
+       // left: 130,
         
     },
     ip: {
         position:'relative',
-        left: 65,
+        //left: 65,
         backgroundColor: '#ffff',
         marginTop : 30,
-        width : 470,
-        height : 70,
+        width : '90%',
+        height : '8%',
         textAlign : 'center',
         fontSize : 20,
         borderRadius:40 
     },
     login: {
         position:'relative',
-        left: 69,
+        //left: 69,
         marginTop : 30,
         backgroundColor : 'pink',
         textAlign : 'center',
-        width : 460,
-        height : 50,
+        width : '50%',
+        height : '10%',
         alignItems : 'center',
         textAlign: 'center',
         justifyContent : 'center',
         borderRadius:30 
+    },
+    CreateAccount: {
+        marginTop : 30,
+        position:'relative',
+        //left: 230,
+        textAlign : 'center',
+        width : 150,
+        height : 50,
+        alignItems : 'center',
+        textAlign: 'center',
+        justifyContent : 'center',
     }
+
 })

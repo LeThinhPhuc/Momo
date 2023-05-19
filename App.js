@@ -13,6 +13,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import * as React from 'react';
 import { NapTien } from './components/NapTien';
 import Login from './components/Login';
+import { DangKi } from './components/DangKi';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -82,6 +83,7 @@ export default function App() {
 			<NavigationContainer>
 				<Stack.Navigator initialRouteName={Login}>
 					<Stack.Screen name='Login' component={Login}/>
+					<Stack.Screen name='Signin' component={DangKi}/>
 					<Stack.Screen name='Momo' component={TabMainInterface} options={{headerShown : false}}/>
 					<Stack.Screen name='NapTien' component={NapTien} options={{title : 'Nạp tiền',headerTitleAlign : 'center',
 						headerStyle: {

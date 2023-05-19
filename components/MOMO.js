@@ -16,7 +16,7 @@ export const MOMO = ({ navigation,route }) => {
 		navigation.navigate('NapTien',{SoTaiKhoan : SoTaiKhoan});
 	}
 	const handleChuyenTien=()=>{
-		navigation.navigate('ChuyenTien');
+		navigation.navigate('ChuyenTien',{SoTaiKhoan : SoTaiKhoan});
 	}
 	//load dữ liệu PersonalInformation từ database lên 
 	useEffect(() => {

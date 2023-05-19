@@ -46,10 +46,10 @@ export function NapTien({ route, navigation }) {
     },[SoTaiKhoan,Balance])
     const [selectedBankIndex, setSelectedBankIndex] = useState(-1);//lưu vị trí index của bank trong list 
     //set index mỗi khi click vào bank
-    const handleBankPress = (index, BankCode,Balance) => {
+    const handleBankPress = async (index, BankCode,BankBalance) => {
         setSelectedBankIndex(index);
         setselectBank(BankCode);
-        setBalanceOfBank(Balance);
+        setBalanceOfBank(BankBalance);
     };
 
     const handleThemNganHang = () => {
@@ -62,6 +62,7 @@ export function NapTien({ route, navigation }) {
             window.alert("Bạn chưa nhập số tiền hoặc chọn ngân hàng");
         }
         else{
+            
             const remain =  parseFloat(BalanceOfBank) - parseFloat(Deposit);//tiền còn lại trong bank
             if(remain < 0) window.alert("Bạn không đủ tiền");
             else{
@@ -69,7 +70,7 @@ export function NapTien({ route, navigation }) {
                 await updateDoc(docRefBank,{
                     BankBalance : parseFloat(remain)
                 })
-
+                setBalanceOfBank(remain);
                 setBalance(parseFloat(Balance) + parseFloat(Deposit));
                 const docRefInfo = doc(db,SoTaiKhoan,"PersonalInformation")
                 await updateDoc(docRefInfo,{
@@ -225,5 +226,4 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 4
     },
-
 });

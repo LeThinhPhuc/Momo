@@ -7,6 +7,7 @@ import { MOMO } from './components/MOMO';
 import { CHAT } from './components/CHAT';
 import { LSGD } from './components/LSGD';
 import { VCT } from './components/VCT';
+import ChuyenTien from './components/ChuyenTien/ChuyenTien';
 import MyWallet from './components/MyWallet/MyWallet';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as React from 'react';
@@ -83,6 +84,15 @@ export default function App() {
 					<Stack.Screen name='Login' component={Login}/>
 					<Stack.Screen name='Momo' component={TabMainInterface} options={{headerShown : false}}/>
 					<Stack.Screen name='NapTien' component={NapTien} options={{title : 'Nạp tiền',headerTitleAlign : 'center',
+						headerStyle: {
+							backgroundColor: '#da4891',
+						  },
+						  headerTintColor: 'white',
+						  headerTitleStyle: {
+							fontWeight: 'bold',
+						  },
+					}} />
+					<Stack.Screen name='ChuyenTien' component={ChuyenTien} options={{title : 'Chuyển tiền',headerTitleAlign : 'center',
 						headerStyle: {
 							backgroundColor: '#da4891',
 						  },

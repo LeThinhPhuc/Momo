@@ -80,11 +80,11 @@ const MyWallet = ({ route }) => {
             </View>
             <View style={{ justifyContent: "center", alignItems: 'center', position: "relative", marginBottom: 20 }}>
                 <TextInput style={styles.input} />
-                <Text style={{ fontSize: 15, position: "absolute", top: 1, left: "18%", backgroundColor: "white", fontWeight: "bold" }}>Họ và tên</Text>
+                <Text style={{ fontSize: 15, position: "absolute", top: 1, left: "18%", backgroundColor: "#f1f5f9", fontWeight: "bold" }}>Họ và tên</Text>
             </View>
             <View style={{ justifyContent: "center", alignItems: 'center', position: "relative" }}>
                 <TextInput style={styles.input} />
-                <Text style={{ fontSize: 15, position: "absolute", top: 1, left: "18%", backgroundColor: "white", fontWeight: "bold" }}>Số tài khoản</Text>
+                <Text style={{ fontSize: 15, position: "absolute", top: 1, left: "18%", backgroundColor: "#f1f5f9", fontWeight: "bold" }}>Số tài khoản</Text>
             </View>
             <View style={{ bottom: 35, width: "100%", position: "absolute", flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: 20 }}>
                 <View style={{ width: "35%" }}>

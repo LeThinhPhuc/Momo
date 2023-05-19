@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity ,Button } from 'react-native';
-
+import ChuyenTien from './ChuyenTien/ChuyenTien';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { doc ,getDoc } from 'firebase/firestore';
 import { db } from '../config/firebaseconfig';
@@ -14,6 +14,9 @@ export const MOMO = ({ navigation,route }) => {
 	};
 	const handleNapTien = () =>{
 		navigation.navigate('NapTien',{SoTaiKhoan : SoTaiKhoan});
+	}
+	const handleChuyenTien=()=>{
+		navigation.navigate('ChuyenTien');
 	}
 	//load dữ liệu PersonalInformation từ database lên 
 	useEffect(() => {
@@ -53,7 +56,7 @@ export const MOMO = ({ navigation,route }) => {
 						<Image source={require('../src/image/24_navigation_cash_in.png')} style={{ tintColor: '#D82D8B', height: 100, width: 100, }} />
 						<Text style={styles.font_feature}>{'Nạp tiền\nvào ví'}</Text>
 					</TouchableOpacity>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={handleChuyenTien}>
 						<Image source={require('../src/image/bank.png')} style={styles.features_icon} />
 						<Text style={styles.font_feature}>{'Chuyển tiền\nngân hàng'}</Text>
 					</TouchableOpacity>

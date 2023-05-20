@@ -82,7 +82,7 @@ export default function App() {
 		<View style={styles.container}>
 			<NavigationContainer>
 				<Stack.Navigator initialRouteName={Login}>
-					<Stack.Screen name='Login' component={Login}/>
+					<Stack.Screen name='Login' component={Login} />
 					<Stack.Screen name='Signin' component={DangKi}/>
 					<Stack.Screen name='Momo' component={TabMainInterface} options={{headerShown : false}}/>
 					<Stack.Screen name='NapTien' component={NapTien} options={{title : 'Nạp tiền',headerTitleAlign : 'center',

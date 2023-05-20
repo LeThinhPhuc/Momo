@@ -2,12 +2,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react
 import { useEffect, useState } from 'react';
 import * as React from 'react';
 import {  ScrollView } from 'react-native';
-import { collection, doc, getDoc, query, where, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, query, where, getDocs, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../config/firebaseconfig';
 import { Bank } from '../LinhTinh/Banks';
 export function NapTien({ route, navigation }) {
 
-    const { SoTaiKhoan } = route.params;
+    const { SoTaiKhoan } = route.params; 
 
     //load tiền 
     const [Balance, setBalance] = useState(0);//tiền trong momo
@@ -67,14 +67,37 @@ export function NapTien({ route, navigation }) {
             if(remain < 0) window.alert("Bạn không đủ tiền");
             else{
                 const docRefBank = doc(db,SoTaiKhoan,selectBank) 
+                const currentTime= new Date();
+                
+        const year = currentTime.getFullYear();
+        const month = String(currentTime.getMonth() + 1).padStart(2, '0');
+        const day = String(currentTime.getDate()).padStart(2, '0');
+        const hours = String(currentTime.getHours()).padStart(2, '0');
+        const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+        const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+      
+        // Tạo chuỗi đại diện cho thời gian
+        const timestamp = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
                 await updateDoc(docRefBank,{
                     BankBalance : parseFloat(remain)
                 })
                 setBalanceOfBank(remain);
                 setBalance(parseFloat(Balance) + parseFloat(Deposit));
                 const docRefInfo = doc(db,SoTaiKhoan,"PersonalInformation")
+                const transaction = {
+                    noidung: "Duoc nap tien tu ngan hang "+selectBank,
+                    note: "",
+                    chenhLech: "+"+parseFloat(Deposit)+"đ",
+                    thoiGian:timestamp,
+                  };
+                
+                  // Lưu giao dịch vào lịch sử trong tài liệu
+                //   await updateDoc(docRefInfo, {
+                //     transactionHistory: arrayUnion(transaction),
+                //   });
                 await updateDoc(docRefInfo,{
-                    Balance : parseFloat(Balance) + parseFloat(Deposit)
+                    Balance : parseFloat(Balance) + parseFloat(Deposit),
+                    transactionHistory: arrayUnion(transaction),
                 })
             }
         }
@@ -88,7 +111,7 @@ export function NapTien({ route, navigation }) {
                 <Text style={styles.txt_NapTien}>Nạp tiền vào</Text>
                 <View style={styles.Vi}>
                     <Text style={{ textAlign: 'center' }}>Ví của tôi</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance).toLocaleString('en-US') + 'đ'}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance)?.toLocaleString('en-US') + 'đ'}</Text>
                 </View>
                 <View>
                     <TextInput keyboardType = 'numeric' placeholder='Nhập số tiền' style={styles.Ip_NhapTien} onChangeText={text => setDeposit(text)}></TextInput>

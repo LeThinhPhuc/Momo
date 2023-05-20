@@ -16,7 +16,7 @@ export const MOMO = ({ navigation,route }) => {
 		navigation.navigate('NapTien',{SoTaiKhoan : SoTaiKhoan});
 	}
 	const handleChuyenTien=()=>{
-		navigation.navigate('ChuyenTien');
+		navigation.navigate('ChuyenTien',{SoTaiKhoan : SoTaiKhoan});
 	}
 	//load dữ liệu PersonalInformation từ database lên 
 	useEffect(() => {
@@ -45,7 +45,7 @@ export const MOMO = ({ navigation,route }) => {
 				<TouchableOpacity>
 					<Image style={styles.bell} source={require('../src/image/bell.png')} />
 				</TouchableOpacity>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={()=>{  navigation.navigate('Login')}}>
 					<Image style={styles.b_account} source={require('../src/image/basic_account.png')} />
 				</TouchableOpacity>
 

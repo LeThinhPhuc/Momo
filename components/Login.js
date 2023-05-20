@@ -15,13 +15,15 @@ export default function Login({ navigation }) {
     const auth = getAuth(app);
 
     const handleLogin = () => {
-        let tk = "09090909090" + "@gmail.com";
-        let mk = "123456";
+        let tk = TaiKhoan + "@gmail.com";
+        let mk = MatKhau;
         const auth = getAuth();
         signInWithEmailAndPassword(auth, tk, mk)
             .then((userCredential) => {
+                setTaiKhoan('')
+                setMatKhau('')
                 navigation.navigate('Momo', {
-                    SoTaiKhoan: "09090909090"
+                    SoTaiKhoan: TaiKhoan
                 });
             })
             .catch((error) => {
@@ -43,10 +45,10 @@ export default function Login({ navigation }) {
                 <Text style = {{fontSize : 20,color:'#ffff'}}>Thiết lập mật khẩu để bảo vệ tài khoản</Text>
                 <Text style = {{fontSize : 20,color:'#ffff'}}>     ví MoMo của bạn (gồm 6 chữ số)</Text>
             </View>
-            <TextInput maxLength={11} keyboardType='numeric' style={styles.ip} placeholder='Nhập tài khoản'
+            <TextInput value={TaiKhoan} maxLength={11} keyboardType='numeric' style={styles.ip} placeholder='Nhập tài khoản'
                 onChangeText={text => setTaiKhoan(text)} />
 
-            <TextInput style={styles.ip} placeholder='Nhập mật khẩu'
+            <TextInput value={MatKhau} style={styles.ip} placeholder='Nhập mật khẩu'
                 onChangeText={text => setMatKhau(text)}/>
             {/* Nút login */}
             <TouchableOpacity style = {styles.login} onPress={handleLogin}>

@@ -97,7 +97,7 @@ const ChuyenTien = ({route}) => {
         <View style={{ position: "relative", height: "100%", width: "100%" }}>
             <View style={{ justifyContent: "center", alignItems: 'center', position: "relative", marginBottom: 20, marginTop: 40 }}>
                 <TextInput value={mail} style={styles.input} onChangeText={(text)=>setMail(text)} />
-                <Text style={{ fontSize: 15, position: "absolute", top: 1, left: "18%", backgroundColor: "#f1f5f9", fontWeight: "bold" }}>Email người nhận</Text>
+                <Text style={{ fontSize: 15, position: "absolute", top: 1, left: "18%", backgroundColor: "#f1f5f9", fontWeight: "bold" }}>Số điện thoại người nhận</Text>
             </View>
             <View style={{ justifyContent: "center", alignItems: 'center', marginBottom: 20, marginTop: 40 }}>
                 <View style={{ borderWidth: 2, borderColor: "#D82D8B", justifyContent: "center", alignItems: 'center', marginBottom: 20, marginTop: 40, width: "80%" }}>
@@ -111,7 +111,7 @@ const ChuyenTien = ({route}) => {
                 </View>
             </View>
             <View style={{ position: "absolute", width: "100%", bottom: 0, height: 80, alignItems: "center", justifyContent: "center", borderTopWidth: 1, borderTopColor: "#D82D8B" }}>
-                <TouchableOpacity  style={{ borderRadius: 10, backgroundColor: "white", width: "90%" }}>
+                <TouchableOpacity onPress={handleChuyenTien}  style={{ borderRadius: 10, backgroundColor: "white", width: "90%" }}>
                     <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", lineHeight: 50 }}>Chuyển tiền</Text>
                 </TouchableOpacity>
             </View>

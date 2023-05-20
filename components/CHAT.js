@@ -4,9 +4,9 @@ import Constants from 'expo-constants';
 export const CHAT = ({navigation}) =>{
   
   return(
-    <View>
-      <Text>
-        Hahahahahahahaahahhahahahahahahahahaha
+    <View style={{justifyContent:"center",alignItems:"center", height:"100%"}}>
+      <Text style={{ fontWeight:"bold", fontSize:40, color:"green"}}>
+        UPDATE IN THE FUTURE
       </Text>
     </View>
   )

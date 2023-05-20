@@ -1,42 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity ,Button } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import ChuyenTien from './ChuyenTien/ChuyenTien';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { doc ,getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebaseconfig';
-export const MOMO = ({ navigation,route }) => {
+export const MOMO = ({ navigation, route }) => {
 	const { SoTaiKhoan } = route.params;
-	const [TenKhachhang,setTenKhachHang] = useState();
-	const [amount,setamount] = useState(0); // Số tiền hiển thị
+	const [TenKhachhang, setTenKhachHang] = useState();
+	const [amount, setamount] = useState(0); // Số tiền hiển thị
 	const [isAmountVisible, setIsAmountVisible] = useState(false);
 	const toggleAmountVisibility = () => {
 		setIsAmountVisible(!isAmountVisible);
 	};
-	const handleNapTien = () =>{
-		navigation.navigate('NapTien',{SoTaiKhoan : SoTaiKhoan});
+	const handleNapTien = () => {
+		navigation.navigate('NapTien', { SoTaiKhoan: SoTaiKhoan });
 	}
-	const handleChuyenTien=()=>{
-		navigation.navigate('ChuyenTien',{SoTaiKhoan : SoTaiKhoan});
+	const handleChuyenTien = () => {
+		navigation.navigate('ChuyenTien', { SoTaiKhoan: SoTaiKhoan });
 
 	}
-	const handleRutTienVeBank = () =>{
-		navigation.navigate('RutTienVeBank',{SoTaiKhoan : SoTaiKhoan})
+	const handleRutTienVeBank = () => {
+		navigation.navigate('RutTienVeBank', { SoTaiKhoan: SoTaiKhoan })
 	}
 	//load dữ liệu PersonalInformation từ database lên 
 	useEffect(() => {
-		const LoadBalanceAndFullName = async () =>
-		{
-			const docRef = doc(db,SoTaiKhoan,"PersonalInformation"); //lấy doccumentID là PersonalInformation trong Collection SoTaiKhoan được lưu trong db
-			const docSnap = await getDoc(docRef) 
-			if(docSnap.exists())
-			{
+		const LoadBalanceAndFullName = async () => {
+			const docRef = doc(db, SoTaiKhoan, "PersonalInformation"); //lấy doccumentID là PersonalInformation trong Collection SoTaiKhoan được lưu trong db
+			const docSnap = await getDoc(docRef)
+			if (docSnap.exists()) {
 				setamount(docSnap.data().Balance);
 				setTenKhachHang(docSnap.data().FullName);
 			}
 			else console.log("KHông tìm thấy document")
 		}
 		LoadBalanceAndFullName();
-	},[SoTaiKhoan])
+	}, [SoTaiKhoan])
+	
+	const handleReload = async () => {
+		const docRef = doc(db, SoTaiKhoan, "PersonalInformation"); //lấy doccumentID là PersonalInformation trong Collection SoTaiKhoan được lưu trong db
+		const docSnap = await getDoc(docRef)
+		if (docSnap.exists()) {
+			setamount(docSnap.data().Balance);
+			setTenKhachHang(docSnap.data().FullName);
+		}
+	}
+
 
 	return (
 		<View style={styles.container}>
@@ -49,7 +57,7 @@ export const MOMO = ({ navigation,route }) => {
 				<TouchableOpacity>
 					<Image style={styles.bell} source={require('../src/image/bell.png')} />
 				</TouchableOpacity>
-				<TouchableOpacity onPress={()=>{  navigation.navigate('Login')}}>
+				<TouchableOpacity onPress={() => { navigation.navigate('Login') }}>
 					<Image style={styles.b_account} source={require('../src/image/basic_account.png')} />
 				</TouchableOpacity>
 
@@ -75,9 +83,16 @@ export const MOMO = ({ navigation,route }) => {
 					<TouchableOpacity onPress={toggleAmountVisibility}>
 						<Ionicons style={styles.eye} name={isAmountVisible ? 'eye' : 'eye-off'} size={40} />
 					</TouchableOpacity>
-					<Text style={styles.amount}>{ isAmountVisible ? parseFloat(amount).toLocaleString('en-US') + 'đ' : '*********'}</Text>
+
+					<Text style={styles.amount}>{isAmountVisible ? amount.toLocaleString('en-US') + 'đ' : '*********'}</Text>
+
+					<View >
+						<TouchableOpacity style={styles.btn_reload} onPress={handleReload}>
+							<Text>Reload</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
-			</View> 
+			</View>
 		</View>
 	)
 }
@@ -100,7 +115,7 @@ const styles = StyleSheet.create({
 	},
 	email: {
 		color: 'white',
-		fontSize : 20
+		fontSize: 20
 	},
 	header: {
 		flexDirection: 'row',
@@ -153,5 +168,16 @@ const styles = StyleSheet.create({
 	},
 	font_feature: {
 		fontSize: 20,
+	}
+	,
+	btn_reload :{
+		width : 50,
+		height : 50 ,
+		backgroundColor : '#D82D8B',
+		justifyContent :'center',
+		alignItems : 'center',
+		marginLeft : 40,
+		borderRadius : 10,
+
 	}
 });

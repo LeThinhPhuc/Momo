@@ -9,6 +9,7 @@ export const LSGD = ({ navigation, route }) => {
   const [historyTransactions, setHistoryTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [dao, setDao] = useState();
 
   useEffect(() => {
     const fetchTransactionHistory = async () => {
@@ -17,6 +18,7 @@ export const LSGD = ({ navigation, route }) => {
       const data = docSnap.data();
       if (data && data.transactionHistory) {
         setHistoryTransactions(data.transactionHistory);
+        setDao([...historyTransactions].reverse());
       }
       setIsLoading(false);
     };
@@ -24,6 +26,7 @@ export const LSGD = ({ navigation, route }) => {
     fetchTransactionHistory();
   }, [SoTaiKhoan]);
 
+  
   console.log("historyTransactions:", historyTransactions);
 
   if (isLoading) {
@@ -42,6 +45,8 @@ export const LSGD = ({ navigation, route }) => {
       const data = docSnap.data();
       if (data && data.transactionHistory) {
         setHistoryTransactions(data.transactionHistory);
+        setDao([...historyTransactions].reverse());
+
       }
     } catch (error) {
       console.error("Error fetching transaction history:", error);
@@ -64,9 +69,9 @@ export const LSGD = ({ navigation, route }) => {
       </View>
     <ScrollView style={{height:"90%"}}>
 
-        {historyTransactions
+        {dao
           .filter((transaction) => {
-            return transaction?.note?.toLowerCase().includes(search?.toLowerCase());
+            return transaction?.note?.toLowerCase().includes(search?.toLowerCase())||transaction?.noidung?.toLowerCase().includes(search?.toLowerCase());
           })
           .map((transaction, index) => {
             console.log(transaction?.thoiGian)

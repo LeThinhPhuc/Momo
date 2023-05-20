@@ -75,7 +75,7 @@ export const MOMO = ({ navigation,route }) => {
 					<TouchableOpacity onPress={toggleAmountVisibility}>
 						<Ionicons style={styles.eye} name={isAmountVisible ? 'eye' : 'eye-off'} size={40} />
 					</TouchableOpacity>
-					<Text style={styles.amount}>{isAmountVisible ? amount + 'đ' : '*********'}</Text>
+					<Text style={styles.amount}>{ isAmountVisible ? parseFloat(amount).toLocaleString('en-US') + 'đ' : '*********'}</Text>
 				</View>
 			</View> 
 		</View>

@@ -1,23 +1,22 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect, useState } from 'react';
 import * as React from 'react';
-import {  ScrollView } from 'react-native';
-import { collection, doc, getDoc, query, where, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { ScrollView } from 'react-native';
+import { collection, doc, getDoc, query, where, getDocs, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../config/firebaseconfig';
 import { Bank } from '../LinhTinh/Banks';
 export function RutTienVeBank({ route, navigation }) {
 
-    const { SoTaiKhoan } = route.params; 
+    const { SoTaiKhoan } = route.params;
 
     //load tiền 
     const [Balance, setBalance] = useState(0);//tiền trong momo
     const [listBanks, setlistBanks] = useState([]);//list bank dùng để load bank
-    const [selectBank,setselectBank] = useState(); //chọn ngân hàng để nạp lúc select
-    const [WithDraw,setWithDraw] = useState();//tiền cần nạp vào momo
-    const [BalanceOfBank,setBalanceOfBank] = useState();
+    const [selectBank, setselectBank] = useState(); //chọn ngân hàng để nạp lúc select
+    const [WithDraw, setWithDraw] = useState();//tiền cần nạp vào momo
+    const [BalanceOfBank, setBalanceOfBank] = useState();
     useEffect(() => {
-        const LoadBankAndBalance = async () =>
-        {
+        const LoadBankAndBalance = async () => {
             const docRef = doc(db, SoTaiKhoan, "PersonalInformation"); //lấy doccumentID là PersonalInformation trong Collection SoTaiKhoan được lưu trong db
             const docSnap = await getDoc(docRef) // chứa thông tin cá nhân
             if (docSnap.exists()) {
@@ -42,12 +41,12 @@ export function RutTienVeBank({ route, navigation }) {
             setlistBanks(banks);
         }
         LoadBankAndBalance();
-    },[SoTaiKhoan,Balance])
+    }, [SoTaiKhoan, Balance])
 
 
     const [selectedBankIndex, setSelectedBankIndex] = useState(-1);//lưu vị trí index của bank trong list 
     //set index mỗi khi click vào bank
-    const handleBankPress = async (index, BankCode,BankBalance) => {
+    const handleBankPress = async (index, BankCode, BankBalance) => {
         setSelectedBankIndex(index);
         setselectBank(BankCode);
         setBalanceOfBank(BankBalance);
@@ -56,26 +55,43 @@ export function RutTienVeBank({ route, navigation }) {
     const handleThemNganHang = () => {
         navigation.navigate('VCT', { SoTaiKhoan: SoTaiKhoan })
     }
-    
-    const handleNapTien = async () =>{
-        if(WithDraw === '' || selectedBankIndex === -1) 
-        {
+
+    const handleNapTien = async () => {
+        if (WithDraw === '' || selectedBankIndex === -1) {
             window.alert("Bạn chưa nhập số tiền hoặc chọn ngân hàng");
         }
-        else{
-            
-            const BankAdd =  parseFloat(BalanceOfBank) + parseFloat(WithDraw);//tiền thêm vào bank
-            if(WithDraw > Balance) window.alert("Bạn không đủ tiền"); //nếu mà tiền rút lớn hơn tiền trong momo
-            else{
-                const docRefBank = doc(db,SoTaiKhoan,selectBank) 
-                await updateDoc(docRefBank,{
-                    BankBalance : parseFloat(BankAdd)
+        else {
+
+            const BankAdd = parseFloat(BalanceOfBank) + parseFloat(WithDraw);//tiền thêm vào bank
+            if (WithDraw > Balance) window.alert("Bạn không đủ tiền"); //nếu mà tiền rút lớn hơn tiền trong momo
+            else {
+                const docRefBank = doc(db, SoTaiKhoan, selectBank)
+                const currentTime = new Date();
+
+                const year = currentTime.getFullYear();
+                const month = String(currentTime.getMonth() + 1).padStart(2, '0');
+                const day = String(currentTime.getDate()).padStart(2, '0');
+                const hours = String(currentTime.getHours()).padStart(2, '0');
+                const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+                const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+
+                // // Tạo chuỗi đại diện cho thời gian
+                const timestamp = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+                await updateDoc(docRefBank, {
+                    BankBalance: parseFloat(BankAdd)
                 })
                 setBalanceOfBank(BankAdd);
                 setBalance(parseFloat(Balance) - parseFloat(WithDraw));
-                const docRefInfo = doc(db,SoTaiKhoan,"PersonalInformation")
-                await updateDoc(docRefInfo,{
-                    Balance : parseFloat(Balance) - parseFloat(WithDraw)
+                const docRefInfo = doc(db, SoTaiKhoan, "PersonalInformation")
+                const transaction = {
+                    noidung: "Nap tien vao ngan hang "+selectBank,
+                    note: "",
+                    chenhLech: "-"+parseFloat(WithDraw)+"đ",
+                    thoiGian:timestamp,
+                  };
+                await updateDoc(docRefInfo, {
+                    Balance: parseFloat(Balance) - parseFloat(WithDraw),
+                    transactionHistory: arrayUnion(transaction),
                 })
             }
         }
@@ -84,7 +100,7 @@ export function RutTienVeBank({ route, navigation }) {
     return (
         <View style={{ flex: 1 }}>
 
-           
+
             {/* phần chọn ngân hàng */}
             <View style={{ flex: 1 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: '5%', marginTop: '5%' }}>Tài khoản / Thẻ</Text>
@@ -101,8 +117,8 @@ export function RutTienVeBank({ route, navigation }) {
                                             BankLogo={value.BankLogo}
                                             BankName={value.BankName}
                                             BankNumber={value.BankNumber}
-                                            BankBalance = {value.BankBalance}
-                                            onPress={() => handleBankPress(index, value.BankCode,value.BankBalance)}>
+                                            BankBalance={value.BankBalance}
+                                            onPress={() => handleBankPress(index, value.BankCode, value.BankBalance)}>
                                         </Bank>
                                     )
                                 })
@@ -112,19 +128,19 @@ export function RutTienVeBank({ route, navigation }) {
                 </View>
 
                 <View style={styles.NapTien}>
-                <Text style={styles.txt_NapTien}>Rút tiền</Text>
-                <View style={styles.Vi}>
-                    <Text style={{ textAlign: 'center' }}>Ví của tôi</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance)?.toLocaleString('en-US') + 'đ'}</Text>
+                    <Text style={styles.txt_NapTien}>Rút tiền</Text>
+                    <View style={styles.Vi}>
+                        <Text style={{ textAlign: 'center' }}>Ví của tôi</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance)?.toLocaleString('en-US') + 'đ'}</Text>
+                    </View>
+                    <View>
+                        <TextInput keyboardType='numeric' placeholder='Nhập số tiền' style={styles.Ip_NhapTien} onChangeText={text => setWithDraw(text)}></TextInput>
+                    </View>
                 </View>
-                <View>
-                    <TextInput keyboardType = 'numeric' placeholder='Nhập số tiền' style={styles.Ip_NhapTien} onChangeText={text => setWithDraw(text)}></TextInput>
-                </View>
-            </View>
             </View>
 
             {/* nút nạp tiền */}
-            <View style={{ backgroundColor: '#cfcfcf' ,height : 70}}>
+            <View style={{ backgroundColor: '#cfcfcf', height: 70 }}>
                 <TouchableOpacity style={styles.btn_NapTien} onPress={handleNapTien}>
                     <Text style={styles.txt_btn_NapTien}>Rút tiền</Text>
                 </TouchableOpacity>

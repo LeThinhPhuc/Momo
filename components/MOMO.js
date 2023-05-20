@@ -45,7 +45,7 @@ export const MOMO = ({ navigation,route }) => {
 				<TouchableOpacity>
 					<Image style={styles.bell} source={require('../src/image/bell.png')} />
 				</TouchableOpacity>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={()=>{  navigation.navigate('Login')}}>
 					<Image style={styles.b_account} source={require('../src/image/basic_account.png')} />
 				</TouchableOpacity>
 

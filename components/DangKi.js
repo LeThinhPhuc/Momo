@@ -14,7 +14,11 @@ export const DangKi = ({navigation}) =>{
 
     const auth = getAuth(app);
 
+<<<<<<< HEAD
    
+=======
+    
+>>>>>>> 589d6e8 (rut tien ve bank)
 
     const handleTaoTaiKhoan = () => {
         let tk = TaoTaiKhoan + "@gmail.com";

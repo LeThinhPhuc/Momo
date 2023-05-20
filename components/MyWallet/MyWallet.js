@@ -126,11 +126,11 @@ const MyWallet = ({ route }) => {
                     alignItems: "center",
                     justifyContent: "center",
                 }}>
-                    {/* <Text style={{ fontSize: 18 }}>{TenKhachhang.split(" ").reduce((acc, cur) => {
+                    <Text style={{ fontSize: 18 }}>{TenKhachhang?.split(" ").reduce((acc, cur) => {
                         // console.log("cur", cur);
                         if (cur == "") return acc;
                         else return (acc += cur[0]);
-                    }, "")}</Text> */}
+                    }, "")}</Text>
                 </View>
                 <View style={{ marginLeft: 10 }}>
                     <Text style={{ fontSize: 18, fontWeight: "bold" }}>{TenKhachhang}</Text>

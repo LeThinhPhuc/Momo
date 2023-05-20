@@ -47,7 +47,7 @@ function TabMainInterface({route})
 					} else if (rn === "VCT") {
 						iconName = focused ? 'person' : 'person';
 
-					} else if (rn === "MOMO") {
+					} else if (rn === "Momo") {
 						iconName = focused ? 'home' : 'home';
 					}
 

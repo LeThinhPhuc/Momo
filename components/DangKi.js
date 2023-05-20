@@ -1,4 +1,4 @@
-import { View, Text, Button, TextInput } from 'react-native'
+import { View, Text, Button, TextInput,StyleSheet,Image,TouchableOpacity, Platform } from 'react-native'
 import React, {useState, useEffect} from 'react';
 import { app, db } from '../config/firebaseconfig'
 import { collection, addDoc,setDoc, doc } from "firebase/firestore";
@@ -14,20 +14,7 @@ export const DangKi = ({navigation}) =>{
 
     const auth = getAuth(app);
 
-    const handleLogin = () => {
-        let tk = TaiKhoan + "@gmail.com";
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, tk, MatKhau)
-            .then((userCredential) => {
-                navigation.navigate('Momo', {
-                    SoTaiKhoan: TaiKhoan
-                });
-            })
-            .catch((error) => {
-                console.log(error.code);
-                console.log(error.message);
-            });
-    }
+   
 
     const handleTaoTaiKhoan = () => {
         let tk = TaoTaiKhoan + "@gmail.com";
@@ -58,25 +45,69 @@ export const DangKi = ({navigation}) =>{
 
     }
     return (
-        <View style={{ justifyContent: 'center', flex: 1 }}>
-            <Text >Tài khoản</Text>
-            <TextInput maxLength={11} keyboardType='numeric' style={{ backgroundColor: 'pink' }} onChangeText={text => setTaiKhoan(text)} />
+        <View style={styles.container}>
 
-            <Text>Mât khẩu</Text>
-            <TextInput style={{ backgroundColor: 'pink' }} onChangeText={text => setMatKhau(text)} ></TextInput>
-            <Button onPress={handleLogin} title='Đăng nhập'></Button>
-
-
-            <View>
-                <Text>Tao tk</Text>
-                <Text>Tên người dùng</Text>
-                <TextInput style = {{backgroundColor : 'pink'}} onChangeText={text => setTenNguoiDung(text)}></TextInput>
-                <Text>tk</Text>
-                <TextInput maxLength={11} keyboardType='numeric' style={{ backgroundColor: 'pink' }} onChangeText={text => setTaoTaiKhoan(text)}></TextInput>
-                <Text>mk</Text>
-                <TextInput style={{ backgroundColor: 'pink' }} onChangeText={text => setTaoMatKhau(text)}></TextInput>
-                <Button onPress={handleTaoTaiKhoan} title='tao tk'></Button>
+            <View style={styles.text}>
+                <Text style={{fontSize:35,color : '#ffff'}}>     Nhập thông tin</Text>
+                <Text></Text>
+                <Text style={{fontSize:20,color : '#ffff'}}>  Thông tin này dùng để xác thực và</Text>
+                <Text style={{fontSize:20,color : '#ffff'}}>bảo vệ tài khoản cua của bạn tốt hơn.</Text>
             </View>
+
+
+
+                <TextInput style = {styles.ip} placeholder='Nhập tên người dùng'
+                onChangeText={text => setTenNguoiDung(text)}>
+                    
+                </TextInput>
+
+                <TextInput maxLength={11} keyboardType='numeric' style = {styles.ip} placeholder='Nhập tài khoản'
+                onChangeText={text => setTaoTaiKhoan(text)}></TextInput>
+                
+                <TextInput style={styles.ip} placeholder='Nhập mật khẩu' 
+                onChangeText={text => setTaoMatKhau(text)}></TextInput>
+                {/* Nút sign up */}
+                <TouchableOpacity style = {styles.dangki} 
+                            onPress={handleTaoTaiKhoan}>
+                            <Text style = {{fontSize : 30}}>Tạo tài khoản</Text>
+                </TouchableOpacity>
         </View>
     )
 }
+const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: '#D82D8B',
+            
+        },
+        text: {
+            position : 'relative',
+            top :'5%',
+            left:'25%',
+        },
+        ip: {
+            position:'relative',
+            top: '7%',
+            left:'5%',
+            backgroundColor: '#ffff',
+            marginTop : 30,
+            width : '90%',
+            height : '8%',
+            textAlign : 'center',
+            fontSize : 20,
+            borderRadius:40 
+        },
+        dangki: {
+            position:'relative',
+            top :'13%',
+            left : '27%',
+            backgroundColor : 'pink',
+            textAlign : 'center',
+            width : '50%',
+            height : '7%',
+            alignItems : 'center',
+            textAlign: 'center',
+            justifyContent : 'center',
+            borderRadius:30 
+        }
+    })

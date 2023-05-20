@@ -14,6 +14,7 @@ import * as React from 'react';
 import { NapTien } from './components/NapTien';
 import Login from './components/Login';
 import { DangKi } from './components/DangKi';
+import {RutTienVeBank} from './components/RutTienVeBank';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -82,8 +83,8 @@ export default function App() {
 		<View style={styles.container}>
 			<NavigationContainer>
 				<Stack.Navigator initialRouteName={Login}>
-					<Stack.Screen name='Login' component={Login} />
-					<Stack.Screen name='Signin' component={DangKi}/>
+					<Stack.Screen name='Login' component={Login}/>
+					<Stack.Screen name='SignUp' component={DangKi} options={{title : "Đăng kí"}}/>
 					<Stack.Screen name='Momo' component={TabMainInterface} options={{headerShown : false}}/>
 					<Stack.Screen name='NapTien' component={NapTien} options={{title : 'Nạp tiền',headerTitleAlign : 'center',
 						headerStyle: {
@@ -104,6 +105,7 @@ export default function App() {
 						  },
 					}} />
 					<Stack.Screen name="VCT" component={MyWallet} options={{ tabBarLabel: "VÍ CỦA TÔI" }} />
+					<Stack.Screen name ="RutTienVeBank" component={RutTienVeBank} options={{title : "Rút tiền về ngân hàng"}}/>
 				</Stack.Navigator>
 			</NavigationContainer>
 		</View>

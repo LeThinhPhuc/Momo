@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react
 import { useEffect, useState } from 'react';
 import * as React from 'react';
 import {  ScrollView } from 'react-native';
-import { collection, doc, getDoc, query, where, getDocs, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { collection, doc, getDoc, query, where, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebaseconfig';
 import { Bank } from '../LinhTinh/Banks';
-export function NapTien({ route, navigation }) {
+export function RutTienVeBank({ route, navigation }) {
 
     const { SoTaiKhoan } = route.params; 
 
@@ -13,7 +13,7 @@ export function NapTien({ route, navigation }) {
     const [Balance, setBalance] = useState(0);//tiền trong momo
     const [listBanks, setlistBanks] = useState([]);//list bank dùng để load bank
     const [selectBank,setselectBank] = useState(); //chọn ngân hàng để nạp lúc select
-    const [Deposit,setDeposit] = useState();//tiền cần nạp vào momo
+    const [WithDraw,setWithDraw] = useState();//tiền cần nạp vào momo
     const [BalanceOfBank,setBalanceOfBank] = useState();
     useEffect(() => {
         const LoadBankAndBalance = async () =>
@@ -24,7 +24,6 @@ export function NapTien({ route, navigation }) {
                 setBalance(docSnap.data().Balance);
             }
             else console.log("KHông tìm thấy document")
-
 
             //truy vấn lấy các ngân hàng
             const q = query(collection(db, SoTaiKhoan), where("Type", "==", "Bank"));
@@ -44,6 +43,8 @@ export function NapTien({ route, navigation }) {
         }
         LoadBankAndBalance();
     },[SoTaiKhoan,Balance])
+
+
     const [selectedBankIndex, setSelectedBankIndex] = useState(-1);//lưu vị trí index của bank trong list 
     //set index mỗi khi click vào bank
     const handleBankPress = async (index, BankCode,BankBalance) => {
@@ -57,47 +58,24 @@ export function NapTien({ route, navigation }) {
     }
     
     const handleNapTien = async () =>{
-        if(Deposit === '' || selectedBankIndex === -1) 
+        if(WithDraw === '' || selectedBankIndex === -1) 
         {
             window.alert("Bạn chưa nhập số tiền hoặc chọn ngân hàng");
         }
         else{
             
-            const remain =  parseFloat(BalanceOfBank) - parseFloat(Deposit);//tiền còn lại trong bank
-            if(remain < 0) window.alert("Bạn không đủ tiền");
+            const BankAdd =  parseFloat(BalanceOfBank) + parseFloat(WithDraw);//tiền thêm vào bank
+            if(WithDraw > Balance) window.alert("Bạn không đủ tiền"); //nếu mà tiền rút lớn hơn tiền trong momo
             else{
                 const docRefBank = doc(db,SoTaiKhoan,selectBank) 
-                const currentTime= new Date();
-                
-        const year = currentTime.getFullYear();
-        const month = String(currentTime.getMonth() + 1).padStart(2, '0');
-        const day = String(currentTime.getDate()).padStart(2, '0');
-        const hours = String(currentTime.getHours()).padStart(2, '0');
-        const minutes = String(currentTime.getMinutes()).padStart(2, '0');
-        const seconds = String(currentTime.getSeconds()).padStart(2, '0');
-      
-        // Tạo chuỗi đại diện cho thời gian
-        const timestamp = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
                 await updateDoc(docRefBank,{
-                    BankBalance : parseFloat(remain)
+                    BankBalance : parseFloat(BankAdd)
                 })
-                setBalanceOfBank(remain);
-                setBalance(parseFloat(Balance) + parseFloat(Deposit));
+                setBalanceOfBank(BankAdd);
+                setBalance(parseFloat(Balance) - parseFloat(WithDraw));
                 const docRefInfo = doc(db,SoTaiKhoan,"PersonalInformation")
-                const transaction = {
-                    noidung: "Duoc nap tien tu ngan hang "+selectBank,
-                    note: "",
-                    chenhLech: "+"+parseFloat(Deposit)+"đ",
-                    thoiGian:timestamp,
-                  };
-                
-                  // Lưu giao dịch vào lịch sử trong tài liệu
-                //   await updateDoc(docRefInfo, {
-                //     transactionHistory: arrayUnion(transaction),
-                //   });
                 await updateDoc(docRefInfo,{
-                    Balance : parseFloat(Balance) + parseFloat(Deposit),
-                    transactionHistory: arrayUnion(transaction),
+                    Balance : parseFloat(Balance) - parseFloat(WithDraw)
                 })
             }
         }
@@ -106,18 +84,7 @@ export function NapTien({ route, navigation }) {
     return (
         <View style={{ flex: 1 }}>
 
-            {/* phần nạp tiền */}
-            <View style={styles.NapTien}>
-                <Text style={styles.txt_NapTien}>Nạp tiền vào</Text>
-                <View style={styles.Vi}>
-                    <Text style={{ textAlign: 'center' }}>Ví của tôi</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance)?.toLocaleString('en-US') + 'đ'}</Text>
-                </View>
-                <View>
-                    <TextInput keyboardType = 'numeric' placeholder='Nhập số tiền' style={styles.Ip_NhapTien} onChangeText={text => setDeposit(text)}></TextInput>
-                </View>
-            </View>
-
+           
             {/* phần chọn ngân hàng */}
             <View style={{ flex: 1 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: '5%', marginTop: '5%' }}>Tài khoản / Thẻ</Text>
@@ -144,27 +111,24 @@ export function NapTien({ route, navigation }) {
                     </ScrollView>
                 </View>
 
-                <View >
-                    <TouchableOpacity style={styles.btn_AddBank}
-                        onPress={handleThemNganHang}>
-                        <Image style={{ width: 40, height: 40, borderRadius: 10 }}
-                            source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUMxquZnCX0lloZnf_aiWIKd_plg0KcOtrnQ&usqp=CAU" }}>
-                        </Image>
-                        <View>
-                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Thêm ngân hàng</Text>
-                            <Text>Miễn phí nạp,rút tiền</Text>
-                        </View>
-                    </TouchableOpacity>
+                <View style={styles.NapTien}>
+                <Text style={styles.txt_NapTien}>Rút tiền</Text>
+                <View style={styles.Vi}>
+                    <Text style={{ textAlign: 'center' }}>Ví của tôi</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>{parseFloat(Balance)?.toLocaleString('en-US') + 'đ'}</Text>
                 </View>
+                <View>
+                    <TextInput keyboardType = 'numeric' placeholder='Nhập số tiền' style={styles.Ip_NhapTien} onChangeText={text => setWithDraw(text)}></TextInput>
+                </View>
+            </View>
             </View>
 
             {/* nút nạp tiền */}
-            <View style={{ backgroundColor: '#cfcfcf' }}>
+            <View style={{ backgroundColor: '#cfcfcf' ,height : 70}}>
                 <TouchableOpacity style={styles.btn_NapTien} onPress={handleNapTien}>
-                    <Text style={styles.txt_btn_NapTien} >Nạp tiền</Text>
+                    <Text style={styles.txt_btn_NapTien}>Rút tiền</Text>
                 </TouchableOpacity>
             </View>
-
         </View>
     );
 }
@@ -201,6 +165,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginHorizontal: 20,
         height: 50,
+        corlor: 'white',
         fontSize: 20
     },
 
@@ -227,7 +192,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginHorizontal: '5%',
         marginVertical: '5%',
-        height: '42%'
+        height: 80
     },
 
     btn_AddBank:

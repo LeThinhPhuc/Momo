@@ -33,7 +33,7 @@ export default function Login({ navigation }) {
     }
 
     const handleDangki=()=>{
-		navigation.navigate('Signin');
+		navigation.navigate('SignUp');
 	}
     return (
         <View style={styles.container}>

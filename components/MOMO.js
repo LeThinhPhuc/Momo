@@ -17,6 +17,10 @@ export const MOMO = ({ navigation,route }) => {
 	}
 	const handleChuyenTien=()=>{
 		navigation.navigate('ChuyenTien',{SoTaiKhoan : SoTaiKhoan});
+
+	}
+	const handleRutTienVeBank = () =>{
+		navigation.navigate('RutTienVeBank',{SoTaiKhoan : SoTaiKhoan})
 	}
 	//load dữ liệu PersonalInformation từ database lên 
 	useEffect(() => {
@@ -56,13 +60,13 @@ export const MOMO = ({ navigation,route }) => {
 						<Image source={require('../src/image/24_navigation_cash_in.png')} style={{ tintColor: '#D82D8B', height: 100, width: 100, }} />
 						<Text style={styles.font_feature}>{'Nạp tiền\nvào ví'}</Text>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={handleChuyenTien}>
+					<TouchableOpacity onPress={handleRutTienVeBank}>
 						<Image source={require('../src/image/bank.png')} style={styles.features_icon} />
-						<Text style={styles.font_feature}>{'Chuyển tiền\nngân hàng'}</Text>
+						<Text style={styles.font_feature}>{'Rút tiền về \n ngân hàng'}</Text>
 					</TouchableOpacity>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={handleChuyenTien}>
 						<Image source={require('../src/image/smartphone.png')} style={styles.features_icon} />
-						<Text style={styles.font_feature}>{'Nạp tiền\nđiện thoại'}</Text>
+						<Text style={styles.font_feature} >{'Chuyển tiền'}</Text>
 					</TouchableOpacity>
 
 				</View>
@@ -71,7 +75,7 @@ export const MOMO = ({ navigation,route }) => {
 					<TouchableOpacity onPress={toggleAmountVisibility}>
 						<Ionicons style={styles.eye} name={isAmountVisible ? 'eye' : 'eye-off'} size={40} />
 					</TouchableOpacity>
-					<Text style={styles.amount}>{isAmountVisible ? amount + 'đ' : '*********'}</Text>
+					<Text style={styles.amount}>{ isAmountVisible ? parseFloat(amount).toLocaleString('en-US') + 'đ' : '*********'}</Text>
 				</View>
 			</View> 
 		</View>

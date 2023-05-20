@@ -1,5 +1,5 @@
-import { updateDoc } from 'firebase/firestore';
-import React,{useState, useEffect} from 'react';
+import { Firestore, updateDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import { collection, doc, getDoc, query, where, getDocs, setDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../../config/firebaseconfig';
@@ -111,7 +111,7 @@ const ChuyenTien = ({route}) => {
                 </View>
             </View>
             <View style={{ position: "absolute", width: "100%", bottom: 0, height: 80, alignItems: "center", justifyContent: "center", borderTopWidth: 1, borderTopColor: "#D82D8B" }}>
-                <TouchableOpacity onPress={handleChuyenTien} style={{ borderRadius: 10, backgroundColor: "white", width: "90%" }}>
+                <TouchableOpacity  style={{ borderRadius: 10, backgroundColor: "white", width: "90%" }}>
                     <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", lineHeight: 50 }}>Chuyển tiền</Text>
                 </TouchableOpacity>
             </View>

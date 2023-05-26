@@ -93,6 +93,8 @@ export function RutTienVeBank({ route, navigation }) {
                     Balance: parseFloat(Balance) - parseFloat(WithDraw),
                     transactionHistory: arrayUnion(transaction),
                 })
+            window.alert("Rút tiền về ngân hàng thành công !");
+
             }
         }
     }

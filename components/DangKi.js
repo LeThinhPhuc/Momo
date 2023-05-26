@@ -17,6 +17,9 @@ export const DangKi = ({navigation}) =>{
    
 
     const handleTaoTaiKhoan = () => {
+        if(TenNguoiDung==""||TaoMatKhau==""||TaoTaiKhoan==""){
+            window.alert("Bạn chưa nhập đầy đủ thông tin !")
+        }else{}
         let tk = TaoTaiKhoan + "@gmail.com";
         createUserWithEmailAndPassword(auth, tk, TaoMatKhau)
             .then(async (userCredential) => {
@@ -29,12 +32,14 @@ export const DangKi = ({navigation}) =>{
                         Balance : 0
                     })
                     console.log("Thêm dữ liệu vào firebase thành công")
+                    window.alert("Đăng kí thành công !")
+                navigation.navigate("Login")
                 } 
                 catch (e) {
                     console.error("Error adding document: ", e);
                 }
                 console.log("Tạo tài khoản thành công");
-
+                
             })
             .catch((error) => {
                 console.log(error.code);
@@ -48,9 +53,9 @@ export const DangKi = ({navigation}) =>{
         <View style={styles.container}>
 
             <View style={styles.text}>
-                <Text style={{fontSize:35,color : '#ffff'}}>     Nhập thông tin</Text>
+                <Text style={{fontSize:35,color : '#ffff', marginTop:40}}>Nhập thông tin</Text>
                 <Text></Text>
-                <Text style={{fontSize:20,color : '#ffff'}}>  Thông tin này dùng để xác thực và</Text>
+                <Text style={{fontSize:20,color : '#ffff'}}>Thông tin này dùng để xác thực và</Text>
                 <Text style={{fontSize:20,color : '#ffff'}}>bảo vệ tài khoản cua của bạn tốt hơn.</Text>
             </View>
 
@@ -81,9 +86,11 @@ const styles = StyleSheet.create({
             
         },
         text: {
-            position : 'relative',
-            top :'5%',
-            left:'25%',
+            // position : 'relative',
+            // top :'5%',
+            // left:'25%',
+            alignItems:"center",
+            justifyContent:"center"
         },
         ip: {
             position:'relative',

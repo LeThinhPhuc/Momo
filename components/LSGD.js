@@ -70,7 +70,7 @@ export const LSGD = ({ navigation, route }) => {
     <ScrollView style={{height:"90%"}}>
 
         {dao
-          .filter((transaction) => {
+          ?.filter((transaction) => {
             return transaction?.note?.toLowerCase().includes(search?.toLowerCase())||transaction?.noidung?.toLowerCase().includes(search?.toLowerCase());
           })
           .map((transaction, index) => {

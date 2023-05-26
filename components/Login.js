@@ -48,8 +48,14 @@ export default function Login({ navigation }) {
             <TextInput value={TaiKhoan} maxLength={11} keyboardType='numeric' style={styles.ip} placeholder='Nhập tài khoản'
                 onChangeText={text => setTaiKhoan(text)} />
 
-            <TextInput value={MatKhau} style={styles.ip} placeholder='Nhập mật khẩu'
-                onChangeText={text => setMatKhau(text)}/>
+<TextInput
+  value={MatKhau}
+  secureTextEntry={true}
+  style={styles.ip}
+  placeholder='Nhập mật khẩu'
+  onChangeText={text => setMatKhau(text)}
+/>
+
             {/* Nút login */}
             <TouchableOpacity style = {styles.login} onPress={handleLogin}>
                         <Text style = {{fontSize : 30}}>Log in</Text>

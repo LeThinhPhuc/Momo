@@ -17,6 +17,9 @@ export const DangKi = ({navigation}) =>{
    
 
     const handleTaoTaiKhoan = () => {
+        if(TenNguoiDung==""||TaoMatKhau==""||TaoTaiKhoan==""){
+            window.alert("Bạn chưa nhập đầy đủ thông tin !")
+        }else{}
         let tk = TaoTaiKhoan + "@gmail.com";
         createUserWithEmailAndPassword(auth, tk, TaoMatKhau)
             .then(async (userCredential) => {
@@ -29,12 +32,14 @@ export const DangKi = ({navigation}) =>{
                         Balance : 0
                     })
                     console.log("Thêm dữ liệu vào firebase thành công")
+                    window.alert("Đăng kí thành công !")
+                navigation.navigate("Login")
                 } 
                 catch (e) {
                     console.error("Error adding document: ", e);
                 }
                 console.log("Tạo tài khoản thành công");
-
+                
             })
             .catch((error) => {
                 console.log(error.code);

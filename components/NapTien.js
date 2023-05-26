@@ -99,6 +99,8 @@ export function NapTien({ route, navigation }) {
                     Balance : parseFloat(Balance) + parseFloat(Deposit),
                     transactionHistory: arrayUnion(transaction),
                 })
+            window.alert("Nạp tiền thành công !");
+
             }
         }
     }

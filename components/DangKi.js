@@ -48,9 +48,9 @@ export const DangKi = ({navigation}) =>{
         <View style={styles.container}>
 
             <View style={styles.text}>
-                <Text style={{fontSize:35,color : '#ffff'}}>     Nhập thông tin</Text>
+                <Text style={{fontSize:35,color : '#ffff', marginTop:40}}>Nhập thông tin</Text>
                 <Text></Text>
-                <Text style={{fontSize:20,color : '#ffff'}}>  Thông tin này dùng để xác thực và</Text>
+                <Text style={{fontSize:20,color : '#ffff'}}>Thông tin này dùng để xác thực và</Text>
                 <Text style={{fontSize:20,color : '#ffff'}}>bảo vệ tài khoản cua của bạn tốt hơn.</Text>
             </View>
 
@@ -81,9 +81,11 @@ const styles = StyleSheet.create({
             
         },
         text: {
-            position : 'relative',
-            top :'5%',
-            left:'25%',
+            // position : 'relative',
+            // top :'5%',
+            // left:'25%',
+            alignItems:"center",
+            justifyContent:"center"
         },
         ip: {
             position:'relative',

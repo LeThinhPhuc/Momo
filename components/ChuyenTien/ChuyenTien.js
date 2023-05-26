@@ -6,7 +6,7 @@ import { db } from '../../config/firebaseconfig';
 
 
 const ChuyenTien = ({route}) => {
-    const [mail,setMail]=useState();
+    const [mail,setMail]=useState("");
     const [note,setNote]=useState();
     const [money, setMoney]=useState(0);
     const { SoTaiKhoan } = route?.params; 
@@ -35,6 +35,9 @@ const ChuyenTien = ({route}) => {
     },[SoTaiKhoan,Balance, Balance2,mail])
 
     const handleChuyenTien = async () => {
+        if(mail==""||money==""){
+            window.alert("Bạn chưa nhập số tiền hoặc số tài khoản người nhận !");
+        }else{
         console.log(mail + " và " + SoTaiKhoan);
         const currentTime= new Date();
         const year = currentTime.getFullYear();
@@ -91,6 +94,9 @@ const ChuyenTien = ({route}) => {
         setMail('');
         setNote('');
         setMoney('');
+        window.alert("Chuyển tiền thành công !");
+
+        }
       };
       
     return (
